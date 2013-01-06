@@ -25,7 +25,7 @@ NASA_APOD_SITE = 'http://apod.nasa.gov/apod/'
 IMAGE_SCROLL = False
 IMAGE_DURATION = 1200
 SEED_IMAGES = 10
-SHOW_DEBUG = True
+SHOW_DEBUG = False
 
 # import glib
 import subprocess
@@ -194,8 +194,6 @@ def resize_image(filename):
 def set_macosx_wallpaper(file_path):
     if SHOW_DEBUG:
         print "Setting the wallpaper"
-        print file_path
-        print os.path.realpath(file_path)
     osa_command = ('tell application "Finder" to set desktop picture to POSIX file "{:s}"'.format(os.path.realpath(file_path)))
     command = ['osascript', '-e', osa_command]
     subprocess.check_call(command)
