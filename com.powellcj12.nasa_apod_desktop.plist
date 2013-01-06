@@ -1,0 +1,22 @@
+<?xml version="1.0" encdoing="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple/DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist verison="1.0">
+<dict>
+	<key>Disabled</key>
+	<false/>
+	<key>ExitTimeOut</key>
+	<integer>0</integer>
+	<key>KeepAlive</key>
+	<false/>
+	<key>Label</key>
+	<string>com.powellcj12_nasa_apod_desktop</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>~/Documents/nasa-apod-desktop/nasa_apod_desktop.py</string>
+	</array>
+	<key>RunAtLoad</key>
+	</false>
+	<key>StartInterval</key>
+	<integer>3600</integer>
+</dict>
+</plist>
