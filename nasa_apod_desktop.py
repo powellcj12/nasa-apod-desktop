@@ -19,15 +19,15 @@
 DOWNLOAD_PATH = '/tmp/backgrounds/'
 CUSTOM_FOLDER = 'nasa-apod-backgrounds'
 RESOLUTION_TYPE = 'stretch'
-RESOLUTION_X = 1024
-RESOLUTION_Y = 768
+RESOLUTION_X = 1200
+RESOLUTION_Y = 800
 NASA_APOD_SITE = 'http://apod.nasa.gov/apod/'
-IMAGE_SCROLL = True
+IMAGE_SCROLL = False
 IMAGE_DURATION = 1200
 SEED_IMAGES = 10
-SHOW_DEBUG = False
+SHOW_DEBUG = True
 
-import glib
+# import glib
 import subprocess
 import commands
 import urllib
@@ -99,7 +99,7 @@ def find_resolution():
 
 # Uses GLib to find the localized "Downloads" folder
 # See: http://askubuntu.com/questions/137896/how-to-get-the-user-downloads-folder-location-with-python
-def set_download_folder():
+''' def set_download_folder():
     downloads_dir = glib.get_user_special_dir(glib.USER_DIRECTORY_DOWNLOAD)
     if downloads_dir:
         # Add any custom folder
@@ -110,7 +110,7 @@ def set_download_folder():
         new_path = DOWNLOAD_PATH
         if SHOW_DEBUG:
             print "Could not determine download folder with GLib. Using default."
-    return new_path
+    return new_path '''
 
 # Download HTML of the site
 def download_site(url):
@@ -192,11 +192,11 @@ def resize_image(filename):
 
 # Sets the new image as the wallpaper
 def set_macosx_wallpaper(file_path):
-    ''' Sets the image as the wallpaper on mac osx '''
     if SHOW_DEBUG:
         print "Setting the wallpaper"
-    osa_command = ('tell application "Finder" to set desktop picture to POSIX'
-    ' file "{:s}"'.format(os.path.realpath(file_path)))
+        print file_path
+        print os.path.realpath(file_path)
+    osa_command = ('tell application "Finder" to set desktop picture to POSIX file "{:s}"'.format(os.path.realpath(file_path)))
     command = ['osascript', '-e', osa_command]
     subprocess.check_call(command)
 
@@ -348,10 +348,10 @@ if __name__ == '__main__':
         print "Starting"
 
     # Find desktop resolution
-    RESOLUTION_X, RESOLUTION_Y = find_resolution()
+    #RESOLUTION_X, RESOLUTION_Y = find_resolution()
 
     # Set a localized download folder
-    DOWNLOAD_PATH = set_download_folder()
+    #DOWNLOAD_PATH = set_download_folder()
 
     # Create the download path if it doesn't exist
     if not os.path.exists(os.path.expanduser(DOWNLOAD_PATH)):
@@ -380,11 +380,10 @@ if __name__ == '__main__':
         exit()
 
     # Set the wallpaper
-    if sys.platform.upper() == 'DARWIN':
+    if platform.upper() == 'DARWIN':
         set_macosx_wallpaper(filename)
     else:
         status = set_gnome_wallpaper(filename)
 
     if SHOW_DEBUG:
         print "Finished!"
-
