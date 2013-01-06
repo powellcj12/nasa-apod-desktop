@@ -1,61 +1,5 @@
 #!/usr/bin/env python
 # 
-# Copyright (c) 2012 David Drake
-# 
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-# 
-#    http://www.apache.org/licenses/LICENSE-2.0
-# 
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# 
-# 
-# nasa_apod_desktop.py
-# https://github.com/randomdrake/nasa-apod-desktop
-# 
-# Written/Modified by David Drake
-# http://randomdrake.com 
-# http://twitter.com/randomdrake 
-# 
-# 
-# Tested on Ubuntu 12.04
-# 
-# 
-# DESCRIPTION
-# 1) Grabs your current download path
-# 2) Downloads the latest image of the day from NASA (http://apod.nasa.gov/apod/)
-# 3) Determines your desktop resolution, or uses the set default.
-# 4) Resizes the image to the given resolution.
-# 5) Sets the image as your desktop.
-# 6) Adds image to XML file used to scroll through desktop background images.
-#
-# It's not very exciting to scroll through a single image, so it will attempt to download 
-# additional images (default: 10) to seed your list of images.
-#
-# 
-# INSTALLATION
-# Place the file wherever you like and chmod +x it to make it executable
-# Ensure you have Python installed (default for Ubuntu) and the PIL and lxml packages:
-# pip install -f requirements.txt or sudo apt-get install python-imaging python-lxml
-# 
-#
-# RUN AT STARTUP
-# To have this run whenever you startup your computer, perform the following steps:
-# 1) Click on the settings button (cog in top right)
-# 2) Select "Startup Applications..."
-# 3) Click the "Add" button
-# 4) Enter whatever Name and Comment you like with the following Command:
-# python /path/to/nasa_apod_desktop.py
-# 5) Click on the "Add" button
-# 
-# DEFAULTS
-# While the script will detect as much as possible and has safe defaults, you may want to set your own.
-# 
 # DOWNLOAD_PATH  - where you want the file to be downloaded. Will be auto-detected if not set.
 # CUSTOM_FOLDER  - if we detect your download folder, this will be the target folder in there.
 # RESOUTION_TYPE - 
@@ -93,8 +37,7 @@ import os
 import random
 import glob
 from PIL import Image
-from sys import stdout
-from sys import exit
+from sys import stdout, platform, exit
 from lxml import etree
 from datetime import datetime, timedelta
 
@@ -217,10 +160,10 @@ def get_image(text):
             print "Retrieving image"
             urllib.urlretrieve(file_url, save_to, print_download_status)
 
-            # Adding additional padding to ensure entire line 
+            # Adding additional padding to ensure entire line
             if SHOW_DEBUG:
                 print "\rDone downloading", human_readable_size(file_size), "       "
-        else: 
+        else:
             urllib.urlretrieve(file_url, save_to)
     elif SHOW_DEBUG:
         print "File exists, moving on"
@@ -248,6 +191,15 @@ def resize_image(filename):
         image.save(fhandle, 'PNG')
 
 # Sets the new image as the wallpaper
+def set_macosx_wallpaper(file_path):
+    ''' Sets the image as the wallpaper on mac osx '''
+    if SHOW_DEBUG:
+        print "Setting the wallpaper"
+    osa_command = ('tell application "Finder" to set desktop picture to POSIX'
+    ' file "{:s}"'.format(os.path.realpath(file_path)))
+    command = ['osascript', '-e', osa_command]
+    subprocess.check_call(command)
+
 def set_gnome_wallpaper(file_path):
     if SHOW_DEBUG:
         print "Setting the wallpaper"
@@ -405,7 +357,7 @@ if __name__ == '__main__':
     if not os.path.exists(os.path.expanduser(DOWNLOAD_PATH)):
         os.makedirs(os.path.expanduser(DOWNLOAD_PATH))
 
-    # Grab the HTML contents of the file 
+    # Grab the HTML contents of the file
     site_contents = download_site(NASA_APOD_SITE)
     if site_contents == "error":
         if SHOW_DEBUG:
@@ -428,7 +380,11 @@ if __name__ == '__main__':
         exit()
 
     # Set the wallpaper
-    status = set_gnome_wallpaper(filename)
+    if sys.platform.upper() == 'DARWIN':
+        set_macosx_wallpaper(filename)
+    else:
+        status = set_gnome_wallpaper(filename)
+
     if SHOW_DEBUG:
         print "Finished!"
 
