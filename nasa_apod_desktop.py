@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/opt/local/bin/python
 # 
 # DOWNLOAD_PATH  - where you want the file to be downloaded. Will be auto-detected if not set.
 # CUSTOM_FOLDER  - if we detect your download folder, this will be the target folder in there.
@@ -27,7 +27,7 @@ IMAGE_DURATION = 1200
 SEED_IMAGES = 10
 SHOW_DEBUG = False
 
-# import glib
+#import glib
 import subprocess
 import commands
 import urllib
@@ -36,7 +36,7 @@ import re
 import os
 import random
 import glob
-from PIL import Image
+import Image
 from sys import stdout, platform, exit
 from lxml import etree
 from datetime import datetime, timedelta
