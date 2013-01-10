@@ -1,4 +1,4 @@
-#!/opt/local/bin/python
+#!/usr/bin/env python
 # 
 # DOWNLOAD_PATH  - where you want the file to be downloaded. Will be auto-detected if not set.
 # CUSTOM_FOLDER  - if we detect your download folder, this will be the target folder in there.
