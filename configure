@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+#
+# NOTE: Much of this requires root access
+
+# Install pip
+curl -O http://pypi.python.org/packages/source/p/pip/pip-1.0.tar.gz
+tar xvfz pip-1.0.tar.gz
+rm pip-1.0.tar.gz
+cd pip-1.0
+python setup.py install
+cd ..
+rm -rf pip-1.0
+
+# Install package requirements
+pip install -r requirements.txt
+
+# Set up plist daemon
+cp com.powellcj12.nasa_apod_desktop.plist ~/Library/LaunchAgents/com.powellcj12.nasa_apod_desktop.plist
+cd ~/Library/LaunchAgents
+launchctl load com.powellcj12.nasa_apod_desktop.plist
+launchctl start com.powellcj12.nasa_apod_desktop
