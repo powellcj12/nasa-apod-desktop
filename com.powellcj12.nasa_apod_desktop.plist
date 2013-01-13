@@ -15,7 +15,7 @@
 		<string>/Volumes/Macintosh HD/Users/Charlie/Documents/nasa-apod-desktop/nasa_apod_desktop.py</string>
 	</array>
 	<key>RunAtLoad</key>
-	<false/>
+	<true/>
 	<key>StartInterval</key>
 	<integer>3600</integer>
 </dict>
