@@ -25,15 +25,18 @@ Instructions:
 =====
 1. Open a terminal
 2. Type the following in a terminal:
-	`git clone http://www.github.com/powellcj12/nasa-apod-desktop.git`
-	`cd nasa-apod-desktop`
-	`sudo sh configure`
+	```bash
+	git clone http://www.github.com/powellcj12/nasa-apod-desktop.git
+	cd nasa-apod-desktop
+	sudo sh configure
+	```
 3. Enter your password when prompted
 4. Tell the program whether or not you want this to run on its own so your background will change automatically
 5. If all goes well, your background should be changed and you can remove the directory this was downloaded to!
-	`cd ..`
-	`rm -rf nasa-apod-desktop`
-
+	```bash
+	cd ..
+	rm -rf nasa-apod-desktop
+	```
 How it Works:
 =====
 1. Grabs your current download path
