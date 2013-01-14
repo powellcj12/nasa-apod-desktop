@@ -11,10 +11,13 @@ The popular NASA Astronomy Picture of the Day produces wonderful images that mak
 ![NASA APOD Example](http://randomdrake.com/nasa_apod.jpg "An example of a NASA APOD image.")
 
 http://en.wikipedia.org/wiki/Astronomy_Picture_of_the_Day
+
 http://apod.nasa.gov/apod/astropix.html
 
 Originally created for Ubuntu 12.04 by (David Drake)[http://www.github.com/randomdrake/]
+
 Adapted for Mac OS X by (Simon Walker)[http://www.github.com/mindriot101/]
+
 Updated and maintained for Mac OS X by (Charlie Powell)[http://www.github.com/powellcj12/]
 
 Tested on:
