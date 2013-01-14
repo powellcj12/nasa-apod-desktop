@@ -12,7 +12,7 @@
 	<string>com.powellcj12.nasa_apod_desktop</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/Volumes/Macintosh HD/Users/Charlie/Documents/nasa-apod-desktop/nasa_apod_desktop.py</string>
+		<string>/usr/local/bin/nasa_apod_desktop.py</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>

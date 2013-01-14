@@ -11,15 +11,28 @@ The popular NASA Astronomy Picture of the Day produces wonderful images that mak
 ![NASA APOD Example](http://randomdrake.com/nasa_apod.jpg "An example of a NASA APOD image.")
 
 http://en.wikipedia.org/wiki/Astronomy_Picture_of_the_Day
-
 http://apod.nasa.gov/apod/astropix.html
 
-Created for:
-* Ubuntu 12.04
+Originally created for Ubuntu 12.04 by (David Drake)[http://www.github.com/randomdrake/]
+Adapted for Mac OS X by (Simon Walker)[http://www.github.com/mindriot101/]
+Updated and maintained for Mac OS X by (Charlie Powell)[http://www.github.com/powellcj12/]
 
 Tested on:
-* Ubuntu 12.04
 * Mac OS X 10.6.8
+* Mac OS X 10.8.1
+
+Instructions:
+=====
+1. Open a terminal
+2. Type the following in a terminal:
+	`git clone http://www.github.com/powellcj12/nasa-apod-desktop.git`
+	`cd nasa-apod-desktop`
+	`sudo sh configure`
+3. Enter your password when prompted
+4. Tell the program whether or not you want this to run on its own so your background will change automatically
+5. If all goes well, your background should be changed and you can remove the directory this was downloaded to!
+	`cd ..`
+	`rm -rf nasa-apod-desktop`
 
 How it Works:
 =====
@@ -51,14 +64,7 @@ But, generating the XML file wasn't enough. I also wanted to start with a number
 While searching around for the original source, I found out that the project I grabbed from was originally based on a [different script](http://apod.nasa.gov/apod/astropix.html), which I think is worth mentioning.
 
 Please note: I am not extremely well-versed in Python. I have been playing with the language and Django lately so, if improvements could be made, please let me know.
-
-Installation:
-=====
-* Place the file wherever you like and chmod +x it to make it executable
-* Ensure you have Python installed (default for Ubuntu) and the PIL and lxml packages:
-* pip install -f requirements.txt or sudo apt-get install python-imaging python-lxml
-* Set the defaults in the file
-  
+ 
 Defaults:
 =====
 While the script will detect as much as possible and has safe defaults, you may want to set your own.
@@ -77,24 +83,6 @@ While the script will detect as much as possible and has safe defaults, you may 
 * __SEED_IMAGES__    - if > 0, it will download previous images as well to seed the list of images
 * __SHOW\_DEBUG__ - whether to print useful debugging information or statuses
 
-Run at Startup:
-=====
-If you want the file to automatically run at startup:
-
-__Ubuntu__
-
-1. Click on the settings button (cog in top right)
-2. Select "Startup Applications..."
-3. Click the "Add" button
-4. Enter whatever name and comment you like and make sure the "Command" is set to: python /path/to/nasa_apod_desktop.py
-5. Click on the "Add" button
-
-__Mac OS X__
-
-1. Edit com.powellcj12.nasa\_apod\_desktop.plist to run as often as you desire (default is once every hour)
-2. Create a symlink to the plist in ~/Library/LaunchAgents/
-3. Log out and back in to install the launch LaunchAgents
-
 License:
 =====
 Open-source and free for use.
@@ -106,7 +94,7 @@ Open-source and free for use.
 >
 >Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. 
 
-Author:
+Original Author:
 =====
 David Drake 
 

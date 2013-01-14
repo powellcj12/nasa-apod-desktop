@@ -6,16 +6,22 @@
 curl -O http://pypi.python.org/packages/source/p/pip/pip-1.0.tar.gz
 tar xvfz pip-1.0.tar.gz
 rm pip-1.0.tar.gz
-cd pip-1.0
-python setup.py install
-cd ..
+python pip-1.0/setup.py install
 rm -rf pip-1.0
 
 # Install package requirements
 pip install -r requirements.txt
 
-# Set up plist daemon
-cp com.powellcj12.nasa_apod_desktop.plist ~/Library/LaunchAgents/com.powellcj12.nasa_apod_desktop.plist
-cd ~/Library/LaunchAgents
-launchctl load com.powellcj12.nasa_apod_desktop.plist
-launchctl start com.powellcj12.nasa_apod_desktop
+# Set up plist daemon only if the user wants to
+read -p "Would you like to set up the program to run automatically on your computer (y/n)?: [y]?" -e auto
+auto="${input:-"y"}"
+
+cp nasa_apod_desktop.py /usr/local/bin/nasa_apod_desktop.py
+
+if [$auto = "y"] || [$auto = "Y"] || [$auto = "yes"] || [$auto = "Yes"] || [$auto = "YES"] then
+	cp com.powellcj12.nasa_apod_desktop.plist ~/Library/LaunchAgents/com.powellcj12.nasa_apod_desktop.plist
+	launchctl load ~/Library/LaunchAgents/com.powellcj12.nasa_apod_desktop.plist
+	launchctl start com.powellcj12.nasa_apod_desktop
+else
+	sh nasa_apod_desktop.py
+fi
