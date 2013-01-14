@@ -13,12 +13,12 @@ rm -rf pip-1.0
 pip install -r requirements.txt
 
 # Set up plist daemon only if the user wants to
-read -p "Would you like to set up the program to run automatically on your computer (y/n)?: [y]?" -e auto
+read -p "Would you like to set up the program to run automatically on your computer (y/n)?: [y] " -e auto
 auto="${input:-"y"}"
 
 cp nasa_apod_desktop.py /usr/local/bin/nasa_apod_desktop.py
 
-if [$auto = "y"] || [$auto = "Y"] || [$auto = "yes"] || [$auto = "Yes"] || [$auto = "YES"] then
+if [[ $auto == "y" || $auto == "Y" || $auto == "yes" || $auto == "Yes" || $auto == "YES" ]]; then
 	cp com.powellcj12.nasa_apod_desktop.plist ~/Library/LaunchAgents/com.powellcj12.nasa_apod_desktop.plist
 	launchctl load ~/Library/LaunchAgents/com.powellcj12.nasa_apod_desktop.plist
 	launchctl start com.powellcj12.nasa_apod_desktop
