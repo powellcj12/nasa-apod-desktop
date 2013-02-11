@@ -2,14 +2,29 @@
 #
 # NOTE: Much of this requires root access
 
-# Install pip
-curl -O http://pypi.python.org/packages/source/p/pip/pip-1.0.tar.gz
-tar xvfz pip-1.0.tar.gz
-rm pip-1.0.tar.gz
-cd pip-1.0
-python setup.py install
+# Install pip if necessary
+if [ -x /usr/local/bin/pip ]; then
+	echo "pip already installed - skipping download"
+else
+	curl -O http://pypi.python.org/packages/source/p/pip/pip-1.0.tar.gz
+	tar xvfz pip-1.0.tar.gz
+	rm pip-1.0.tar.gz
+	cd pip-1.0
+	python setup.py install
+	cd ..
+	rm -rf pip-1.0
+fi
+
+# Install libjpeg library necessary for PIL
+curl -O http://www.ijg.org/files/jpegsrc.v8c.tar.gz
+tar zxvf jpegsrc.v8c.tar.gz
+rm jpegsrc.v8c.tar.gz
+cd jpeg-8c/
+./configure
+make
+sudo make install
 cd ..
-rm -rf pip-1.0
+rm -rf jpeg-8c
 
 # Install package requirements
 pip install -r requirements.txt
