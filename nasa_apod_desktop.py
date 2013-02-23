@@ -56,18 +56,22 @@ def find_resolution():
 
     if SHOW_DEBUG:
         print "Attempting to determine the current resolution."
+    '''
     if RESOLUTION_TYPE == 'largest':
         regex_search = 'connected'
     else:
         regex_search = 'current'
+    '''
+
         
-    p1 = subprocess.Popen(["xrandr"], stdout=subprocess.PIPE)
-    p2 = subprocess.Popen(["grep", regex_search], stdin=p1.stdout, stdout=subprocess.PIPE)
+    p1 = subprocess.Popen(["system_profiler", "SPDisplaysDataType"], stdout=subprocess.PIPE)
+    p2 = subprocess.Popen(["grep", "Resolution"], stdin=p1.stdout, stdout=subprocess.PIPE)
     p1.stdout.close()
     output = p2.communicate()[0]
 
     if RESOLUTION_TYPE == 'largest':
         # We are going to go through the connected devices and get the X/Y from the largest
+        # Needs to be updated for OSX
         matches = re.finditer(" connected ([0-9]+)x([0-9]+)+", output)
         if matches:
             largest = 0
@@ -78,7 +82,7 @@ def find_resolution():
         elif SHOW_DEBUG:
             print "Could not determine largest screen resolution."
     else:
-        reg = re.search(".* current (.*?) x (.*?),.*", output)
+        reg = re.search(".* Resolution: (.*?) x (.*?),.*", output)
         if reg:
             res_x = reg.group(1)
             res_y = reg.group(2)
@@ -99,7 +103,7 @@ def find_resolution():
 
 # Uses GLib to find the localized "Downloads" folder
 # See: http://askubuntu.com/questions/137896/how-to-get-the-user-downloads-folder-location-with-python
-''' def set_download_folder():
+def set_download_folder():
     downloads_dir = glib.get_user_special_dir(glib.USER_DIRECTORY_DOWNLOAD)
     if downloads_dir:
         # Add any custom folder
@@ -110,7 +114,7 @@ def find_resolution():
         new_path = DOWNLOAD_PATH
         if SHOW_DEBUG:
             print "Could not determine download folder with GLib. Using default."
-    return new_path '''
+    return new_path 
 
 # Download HTML of the site
 def download_site(url):
@@ -345,7 +349,7 @@ if __name__ == '__main__':
         print "Starting"
 
     # Find desktop resolution
-    #RESOLUTION_X, RESOLUTION_Y = find_resolution()
+    RESOLUTION_X, RESOLUTION_Y = find_resolution()
 
     # Set a localized download folder
     #DOWNLOAD_PATH = set_download_folder()
