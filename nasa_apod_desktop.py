@@ -218,6 +218,7 @@ def human_readable_size(number_bytes):
         number_bytes /= 1024.0
 
 # Creates the necessary XML so background images will scroll through
+# Note: this is not maintained and should be considered deprecated
 def create_desktop_background_scoll(filename):
     if not IMAGE_SCROLL:
         return filename
