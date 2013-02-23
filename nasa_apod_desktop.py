@@ -81,7 +81,7 @@ def find_resolution():
         elif SHOW_DEBUG:
             print "Could not determine largest screen resolution."
     else:
-        reg = re.search(".* Resolution: (.*?) x (.*?),.*", output)
+        reg = re.search(".* Resolution: ([0-9]+) x ([0-9]+)\n", output)
         if reg:
             res_x = reg.group(1)
             res_y = reg.group(2)
