@@ -191,19 +191,17 @@ def resize_image(filename):
         image.save(fhandle, 'PNG')
 
 # Sets the new image as the wallpaper
-def set_macosx_wallpaper(file_path):
+def set_wallpaper(file_path):
     if SHOW_DEBUG:
         print "Setting the wallpaper"
-    osa_command = ('tell application "Finder" to set desktop picture to POSIX file "{:s}"'.format(os.path.realpath(file_path)))
-    command = ['osascript', '-e', osa_command]
-    subprocess.check_call(command)
 
-def set_gnome_wallpaper(file_path):
-    if SHOW_DEBUG:
-        print "Setting the wallpaper"
-    command = "gsettings set org.gnome.desktop.background picture-uri file://" + file_path
-    status, output = commands.getstatusoutput(command)
-    return status
+    if platform.upper() == 'DARWIN':
+        osa_command = ('tell application "Finder" to set desktop picture to POSIX file "{:s}"'.format(os.path.realpath(file_path)))
+        command = ['osascript', '-e', osa_command]
+        subprocess.check_call(command)
+    else:
+        command = "gsettings set org.gnome.desktop.background picture-uri file://" + file_path
+        status, output = commands.getstatusoutput(command)
 
 def print_download_status(block_count, block_size, total_size):
     written_size = human_readable_size(block_count * block_size)
@@ -378,10 +376,7 @@ if __name__ == '__main__':
         exit()
 
     # Set the wallpaper
-    if platform.upper() == 'DARWIN':
-        set_macosx_wallpaper(filename)
-    else:
-        status = set_gnome_wallpaper(filename)
+    set_wallpaper(filename)
 
     if SHOW_DEBUG:
         print "Finished!"
