@@ -25,9 +25,8 @@ NASA_APOD_SITE = 'http://apod.nasa.gov/apod/'
 IMAGE_SCROLL = False
 IMAGE_DURATION = 1200
 SEED_IMAGES = 10
-SHOW_DEBUG = False
+SHOW_DEBUG = True
 
-#import glib
 import subprocess
 import commands
 import urllib
@@ -41,7 +40,7 @@ from sys import stdout, platform, exit
 from lxml import etree
 from datetime import datetime, timedelta
 
-# Use XRandR to grab the desktop resolution. If the scaling method is set to 'largest',
+# Use system_profiler to grab the desktop resolution. If the scaling method is set to 'largest',
 # we will attempt to grab it from the largest connected device. If the scaling method
 # is set to 'stretch' we will grab it from the current value. Default will simply use
 # what was set for the default resolutions.
@@ -100,21 +99,6 @@ def find_resolution():
         print "Using detected resolution of %sx%s" % (res_x, res_y)
 
     return int(res_x), int(res_y)
-
-# Uses GLib to find the localized "Downloads" folder
-# See: http://askubuntu.com/questions/137896/how-to-get-the-user-downloads-folder-location-with-python
-def set_download_folder():
-    downloads_dir = glib.get_user_special_dir(glib.USER_DIRECTORY_DOWNLOAD)
-    if downloads_dir:
-        # Add any custom folder
-        new_path = os.path.join(downloads_dir, CUSTOM_FOLDER)
-        if SHOW_DEBUG:
-            print "Using automatically detected path:", new_path
-    else:
-        new_path = DOWNLOAD_PATH
-        if SHOW_DEBUG:
-            print "Could not determine download folder with GLib. Using default."
-    return new_path 
 
 # Download HTML of the site
 def download_site(url):
@@ -350,9 +334,6 @@ if __name__ == '__main__':
 
     # Find desktop resolution
     RESOLUTION_X, RESOLUTION_Y = find_resolution()
-
-    # Set a localized download folder
-    #DOWNLOAD_PATH = set_download_folder()
 
     # Create the download path if it doesn't exist
     if not os.path.exists(os.path.expanduser(DOWNLOAD_PATH)):
