@@ -25,7 +25,7 @@ NASA_APOD_SITE = 'http://apod.nasa.gov/apod/'
 IMAGE_SCROLL = False
 IMAGE_DURATION = 1200
 SEED_IMAGES = 10
-SHOW_DEBUG = True
+SHOW_DEBUG = False
 
 import subprocess
 import commands
@@ -55,38 +55,32 @@ def find_resolution():
 
     if SHOW_DEBUG:
         print "Attempting to determine the current resolution."
-    '''
+
     if RESOLUTION_TYPE == 'largest':
-        regex_search = 'connected'
+        regex_search = 'Displays:'
     else:
-        regex_search = 'current'
-    '''
+        regex_search = 'Resolution:'
 
         
     p1 = subprocess.Popen(["system_profiler", "SPDisplaysDataType"], stdout=subprocess.PIPE)
-    p2 = subprocess.Popen(["grep", "Resolution"], stdin=p1.stdout, stdout=subprocess.PIPE)
+    p2 = subprocess.Popen(["grep", regex_search], stdin=p1.stdout, stdout=subprocess.PIPE)
     p1.stdout.close()
     output = p2.communicate()[0]
 
-    if RESOLUTION_TYPE == 'largest':
-        # We are going to go through the connected devices and get the X/Y from the largest
-        # Needs to be updated for OSX
-        matches = re.finditer(" connected ([0-9]+)x([0-9]+)+", output)
-        if matches:
+    matches = re.finditer(".* Resolution: ([0-9]+) x ([0-9]+)\n", output)
+
+    if matches:
+        if RESOLUTION_TYPE == 'largest': # Loop through displays and use largest resolution
             largest = 0
             for match in matches:
-                if int(match.group(1)) * int(match.group(2)) > largest:
+                if int(match.group(1) * int(match.group(2)) > largest:
                     res_x = match.group(1)
                     res_y = match.group(2)
-        elif SHOW_DEBUG:
-            print "Could not determine largest screen resolution."
-    else:
-        reg = re.search(".* Resolution: ([0-9]+) x ([0-9]+)\n", output)
-        if reg:
-            res_x = reg.group(1)
-            res_y = reg.group(2)
-        elif SHOW_DEBUG:
-            print "Could not determine current screen resolution."
+        else: # Otherwise just use the default display (usually built in)
+            res_x = match.group(1)
+            res_y = match.group(2)
+    elif SHOW_DEBUG:
+        print "Could not detemine resolution automatically. Using defaults."
 
     # If we couldn't find anything automatically use what was set for the defaults
     if res_x == 0 or res_y == 0:
