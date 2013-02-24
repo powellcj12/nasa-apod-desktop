@@ -73,7 +73,7 @@ def find_resolution():
         if RESOLUTION_TYPE == 'largest': # Loop through displays and use largest resolution
             largest = 0
             for match in matches:
-                if int(match.group(1) * int(match.group(2)) > largest:
+                if int(match.group(1)) * int(match.group(2)) > largest:
                     res_x = match.group(1)
                     res_y = match.group(2)
         else: # Otherwise just use the default display (usually built in)
