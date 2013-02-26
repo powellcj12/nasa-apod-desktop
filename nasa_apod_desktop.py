@@ -70,15 +70,11 @@ def find_resolution():
     matches = re.finditer(".* Resolution: ([0-9]+) x ([0-9]+)\n", output)
 
     if matches:
-        if RESOLUTION_TYPE == 'largest': # Loop through displays and use largest resolution
-            largest = 0
-            for match in matches:
-                if int(match.group(1)) * int(match.group(2)) > largest:
-                    res_x = match.group(1)
-                    res_y = match.group(2)
-        else: # Otherwise just use the default display (usually built in)
-            res_x = match.group(1)
-            res_y = match.group(2)
+        largest = 0
+        for match in matches:
+            if int(match.group(1)) * int(match.group(2)) > largest:
+                res_x = match.group(1)
+                res_y = match.group(2)
     elif SHOW_DEBUG:
         print "Could not detemine resolution automatically. Using defaults."
 
