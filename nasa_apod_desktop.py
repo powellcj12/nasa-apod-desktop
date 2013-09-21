@@ -16,7 +16,7 @@
 # SEED_IMAGES    - if > 0, it will download previous images as well to seed the list of images
 # SHOW_DEBUG     - print useful debugging information or statuses
 
-DOWNLOAD_PATH = '/Library/Desktop Backgrounds/NASA-APOD/'
+DOWNLOAD_PATH = '/Library/Desktop Pictures/NASA-APOD'
 CUSTOM_FOLDER = 'nasa-apod-backgrounds'
 RESOLUTION_TYPE = 'stretch'
 RESOLUTION_X = 1440
@@ -116,7 +116,9 @@ def get_image(text):
 
     if SHOW_DEBUG:
         print "Found name of image:", filename
+        print "Grabbing a list of existing files to delete if a new one is downloaded"
 
+    fileList = os.listdir(DOWNLOAD_PATH)
     save_to = os.path.join(DOWNLOAD_PATH, os.path.splitext(filename)[0] + '.png')
 
     if not os.path.isfile(save_to):
@@ -143,6 +145,16 @@ def get_image(text):
                 print "\rDone downloading", human_readable_size(file_size), "       "
         else:
             urllib.urlretrieve(file_url, save_to)
+
+        # If we were able to download a new picture, remove any old ones
+        if SHOW_DEBUG:
+        	print "Deleting old images"
+
+        for oldFile in fileList:
+        	if SHOW_DEBUG:
+        		print "\tDeleting: ", oldFile
+        	os.remove(oldFile)
+
     elif SHOW_DEBUG:
         print "File exists, moving on"
 
