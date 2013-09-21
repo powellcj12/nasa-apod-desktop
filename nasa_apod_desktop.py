@@ -16,7 +16,7 @@
 # SEED_IMAGES    - if > 0, it will download previous images as well to seed the list of images
 # SHOW_DEBUG     - print useful debugging information or statuses
 
-DOWNLOAD_PATH = '/tmp/backgrounds/'
+DOWNLOAD_PATH = '/Library/Desktop Backgrounds/NASA-APOD/'
 CUSTOM_FOLDER = 'nasa-apod-backgrounds'
 RESOLUTION_TYPE = 'stretch'
 RESOLUTION_X = 1440
